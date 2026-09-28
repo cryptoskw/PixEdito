@@ -1,0 +1,17 @@
+PixEdito GitHub Pages focused background-remover build v13 — 28 September 2026
+
+GITHUB ROOT-READY: index.html + .nojekyll + CNAME + /editor-v13/
+
+- One AI function only: remove a person/portrait background
+- No Smart Enhance, AI blur, AI colour or AI replacement modes
+- Original and transparent previews
+- Transparent PNG download and editor layer handoff
+- Portrait model and compatible MediaPipe WASM runtimes included locally
+- Model loads only when the background remover is used
+- Crawlable homepage and complete first-screen editor preserved
+- Embedded editor directive: noindex, indexifembedded, follow
+- Homepage targets the generic online image editor query family
+- Background-removal and transparent-PNG SEO clusters preserved
+- Blur and background-change URLs retained as honest manual-editor guides
+- English/French canonicals, hreflang and structured data preserved
+- 36 canonical sitemap URLs preserved

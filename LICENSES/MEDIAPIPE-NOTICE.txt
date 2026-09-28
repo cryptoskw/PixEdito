@@ -1,0 +1,9 @@
+PixEdito Background Remover includes MediaPipe Tasks Vision 1.0.1 and the
+MediaPipe Selfie Segmenter model from Google.
+
+MediaPipe is licensed under the Apache License, Version 2.0.
+Project: https://github.com/google-ai-edge/mediapipe
+License: see APACHE-2.0.txt in this directory.
+
+MediaPipe and Google are trademarks of their respective owners. PixEdito is
+not affiliated with or endorsed by Google.

@@ -1,0 +1,8 @@
+READY — PixEdito v13 GitHub Pages build
+
+If this file is visible at https://pixedito.com/PIXEDITO-V13-DEPLOYED.txt,
+GitHub Pages is serving the correct v13 repository files.
+
+Expected AI panel title: PixEdito Background Remover
+Expected single action: Remove a portrait background
+Expected output: Download transparent PNG

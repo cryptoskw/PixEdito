@@ -1,0 +1,68 @@
+PIXEDITO — GITHUB PAGES ROOT-READY V13
+Build date: 28 September 2026
+
+IMPORTANT
+Use this GitHub package only. Do not upload the earlier cPanel ZIP to GitHub.
+The software is unchanged: one AI function removes a person or portrait
+background and creates a transparent PNG.
+
+UPLOAD TO GITHUB
+1. Extract PixEdito-GitHub-Pages-v13-ROOT-READY.zip on your computer.
+2. Open the GitHub repository that will host pixedito.com.
+3. Upload every extracted file and folder to the repository root.
+4. Do not upload the ZIP itself and do not place the files inside another folder.
+5. Replace the existing index.html and commit the uploaded files.
+6. Confirm the repository root contains:
+   index.html
+   .nojekyll
+   CNAME
+   404.html
+   editor-v13/
+   assets/site-v13.css
+   PIXEDITO-V13-DEPLOYED.txt
+   robots.txt
+   sitemap.xml
+
+ENABLE GITHUB PAGES
+1. Open repository Settings > Pages.
+2. Under Build and deployment, choose Deploy from a branch.
+3. Select the branch containing the files, normally main.
+4. Select /(root) and save.
+5. Set the custom domain to pixedito.com if GitHub does not read it from CNAME.
+6. Enable Enforce HTTPS after GitHub confirms the domain and certificate.
+
+POINT CLOUDFLARE TO GITHUB PAGES
+Remove only the old website A records that point pixedito.com to the unavailable
+hosting server. Keep MX, SPF, DKIM and other email records unchanged.
+
+Add these four DNS-only A records for @:
+   185.199.108.153
+   185.199.109.153
+   185.199.110.153
+   185.199.111.153
+
+Keep the records DNS only (grey cloud) while GitHub verifies the domain and
+issues HTTPS. If you use www, point its CNAME to the default GitHub Pages
+hostname displayed in repository Settings > Pages.
+
+VERIFY THE DEPLOYMENT
+1. Wait for the Pages deployment to finish.
+2. Visit https://pixedito.com/PIXEDITO-V13-DEPLOYED.txt.
+3. It must begin with: READY — PixEdito v13 GitHub Pages build.
+4. Open https://pixedito.com/?ai=1 in a private/incognito window.
+5. The panel must show only:
+   PixEdito Background Remover
+   Remove a portrait background
+   Download transparent PNG
+
+FUNCTION TEST
+1. Choose a clear portrait photo.
+2. Confirm the original appears on the left.
+3. Confirm the transparent result appears on the checkerboard at the right.
+4. Download the PNG and confirm the background is transparent.
+5. Test Add as new layer.
+
+SEARCH CONSOLE
+- Submit https://pixedito.com/sitemap.xml once after the domain is live.
+- Inspect https://pixedito.com/ and request indexing once.
+- Do not submit the noindex /editor-v13/ URL.

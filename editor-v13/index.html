@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-US">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv="x-ua-compatible" content="IE=edge" />
+	<title>PixEdito Browser Image Editor Workspace</title>
+	<meta name="description" content="Use the PixEdito browser workspace for layers, selections, text, drawing tools, effects and local image export." />
+	<meta name="robots" content="noindex, indexifembedded, follow" />
+	<link rel="canonical" href="https://pixedito.com/editor-v13/" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=0" />
+	<link rel="icon" sizes="192x192" href="../favicon.svg">
+	<link rel="stylesheet" href="background-remover-v13.css?build=13">
+	<style>
+		/* Keep PixEdito shortcuts inside the unused top menu area so they never cover Layers. */
+		.pixedito_links { position: fixed; top: 5px; right: 8px; bottom: auto; z-index: 1200; display: flex; gap: 4px; align-items: center; padding: 4px; border: 1px solid rgba(255,255,255,.14); border-radius: 9px; background: rgba(24,27,32,.9); box-shadow: 0 5px 18px rgba(0,0,0,.24); backdrop-filter: blur(10px); font: 600 11px/1.2 Arial,sans-serif; }
+		.pixedito_links a { color: #dce2ec; padding: 6px 8px; border-radius: 6px; text-decoration: none; }
+		.pixedito_links a:first-child { color: #fff; background: #5b63f2; }
+		.pixedito_links a:hover, .pixedito_links a:focus-visible { color: #fff; background: #3d434d; outline: none; }
+		.pixedito_links .language { border-left: 1px solid rgba(255,255,255,.18); margin-left: 2px; padding-left: 7px; }
+		@media (max-width: 1080px) { .pixedito_links #learn-link, .pixedito_links #about-link, .pixedito_links .privacy-link { display: none; } }
+		@media (max-width: 700px) { .pixedito_links { top: 4px; right: 4px; padding: 3px; } .pixedito_links a { display: none; } }
+	</style>
+	<script src="dist/bundle.js"></script>
+</head>
+<body>
+	<h1 class="sr_only">PixEdito browser image editor workspace</h1>
+	<div class="wrapper">
+
+		<nav aria-label="Main Menu" class="main_menu" id="main_menu"></nav>
+		
+		<div class="submenu">
+			<a class="logo" href="#" aria-label="PixEdito workspace">PixEdito</a>
+			<div class="block attributes" id="action_attributes"></div>
+			<button class="undo_button" id="undo_button" type="button">
+				<span class="sr_only">Undo</span>
+			</button>
+		</div>
+		
+		<div class="sidebar_left" id="tools_container"></div>
+
+
+		<div class="middle_area" id="middle_area">
+
+			<canvas class="ruler_left" id="ruler_left"></canvas>
+			<canvas class="ruler_top" id="ruler_top"></canvas>
+
+			<div class="main_wrapper" id="main_wrapper">
+				<div class="canvas_wrapper" id="canvas_wrapper">
+					<div id="mouse"></div>
+					<div class="transparent-grid" id="canvas_minipaint_background"></div>
+					<canvas id="canvas_minipaint">
+						<div class="trn error">
+							Your browser does not support canvas or JavaScript is not enabled.
+						</div>
+					</canvas>
+				</div>
+			</div>
+		</div>
+
+		<div class="sidebar_right">
+			<div class="preview block">
+				<h2 class="trn toggle" data-target="toggle_preview">Preview</h2>
+				<div id="toggle_preview"></div>
+			</div>
+			
+			<div class="colors block">
+				<h2 class="trn toggle" data-target="toggle_colors">Colors</h2>
+				<div class="content" id="toggle_colors"></div>
+			</div>
+			
+			<div class="block" id="info_base">
+				<h2 class="trn toggle toggle-full" data-target="toggle_info">Information</h2>
+				<div class="content" id="toggle_info"></div>
+			</div>
+			
+			<div class="details block" id="details_base">
+				<h2 class="trn toggle toggle-full" data-target="toggle_details">Layer details</h2>
+				<div class="content details-content" id="toggle_details"></div>
+			</div>
+			
+			<div class="layers block">
+				<h2 class="trn">Layers</h2>
+				<div class="content" id="layers_base"></div>
+			</div>
+		</div>
+	</div>
+	<div class="mobile_menu">
+		<button class="left_mobile_menu" id="left_mobile_menu_button" type="button">
+			<span class="sr_only">Toggle Menu</span>
+		</button>
+		<button class="right_mobile_menu" id="mobile_menu_button" type="button">
+			<span class="sr_only">Toggle Menu</span>
+		</button>
+	</div>
+	<div class="hidden" id="tmp"></div>
+	<div id="popups"></div>
+	<nav class="pixedito_links" aria-label="PixEdito pages">
+		<button class="ai-studio-launch" id="ai-studio-open" type="button">Remove Background ✦</button>
+		<a id="learn-link" href="../tutorials/" target="_top">Learn</a>
+		<a id="about-link" href="../about/" target="_top">About</a>
+		<a id="privacy-link" class="privacy-link" href="../privacy/" target="_top">Privacy</a>
+		<a class="language" href="../tutorials/" target="_top" lang="en" hreflang="en">EN</a>
+		<a href="../fr/tutoriels/" target="_top" lang="fr" hreflang="fr">FR</a>
+	</nav>
+	<section class="ai-studio" id="ai-studio" role="dialog" aria-modal="true" aria-labelledby="ai-studio-title" hidden>
+		<div class="ai-studio__dialog" tabindex="-1">
+			<header class="ai-studio__header">
+				<div class="ai-studio__brand"><span class="ai-studio__spark" aria-hidden="true">✦</span><div><strong id="ai-studio-title">PixEdito Background Remover</strong><span data-ai-copy="subtitle">Private portrait background removal on your device</span></div></div>
+				<span class="ai-studio__private" data-ai-copy="private">✓ Runs in your browser</span>
+				<button class="ai-studio__close" id="ai-studio-close" type="button" aria-label="Close background remover">×</button>
+			</header>
+			<div class="ai-studio__body">
+				<div class="ai-studio__work">
+					<div class="ai-studio__empty" id="ai-empty">
+						<div class="ai-studio__empty-inner"><div class="ai-studio__empty-icon" aria-hidden="true">✦</div><h2 data-ai-copy="emptyTitle">Remove a portrait background</h2><p data-ai-copy="emptyBody">Choose a photo with a clear person. PixEdito removes the background on this device and creates a transparent PNG.</p><div class="ai-studio__actions"><label class="ai-button ai-button--primary" for="ai-portrait-input" data-ai-copy="upload">Choose a picture</label><input id="ai-portrait-input" type="file" accept="image/jpeg,image/png,image/webp" hidden><button class="ai-button" id="ai-use-canvas" type="button" data-ai-copy="canvas">Use current canvas</button></div></div>
+					</div>
+					<div class="ai-studio__preview" id="ai-preview" hidden>
+						<div class="ai-preview"><div class="ai-preview__label"><span data-ai-copy="original">Original</span></div><div class="ai-preview__canvas"><canvas id="ai-original-canvas"></canvas></div></div>
+						<div class="ai-preview"><div class="ai-preview__label"><span data-ai-copy="result">Transparent result</span></div><div class="ai-preview__canvas"><canvas id="ai-result-canvas"></canvas></div></div>
+					</div>
+				</div>
+				<aside class="ai-studio__controls">
+					<h2 data-ai-copy="panelTitle">Remove the background</h2><p data-ai-copy="panelBody">The AI is designed for people and portraits. It does not promise reliable results for products, pets or logos.</p>
+					<div class="ai-single-purpose"><span aria-hidden="true">✓</span><div><strong data-ai-copy="singleTitle">One focused AI action</strong><p data-ai-copy="singleBody">Your result keeps the detected person and makes everything behind them transparent.</p></div></div>
+					<p class="ai-studio__status" id="ai-status" role="status" aria-live="polite"></p>
+					<div class="ai-studio__footer-actions"><button class="ai-button ai-button--primary" id="ai-download" type="button" data-ai-copy="download" disabled>Download transparent PNG</button><button class="ai-button" id="ai-apply" type="button" data-ai-copy="apply" disabled>Add as new layer</button><button class="ai-button" id="ai-reset" type="button" data-ai-copy="reset">New picture</button></div>
+					<p class="ai-studio__footnote" data-ai-copy="footnote">Your photo stays on this device. The portrait model loads only when you use this tool.</p>
+				</aside>
+			</div>
+		</div>
+	</section>
+	<script>
+		(function () {
+			if (!String(navigator.language || "").toLowerCase().startsWith("fr")) return;
+			var learn = document.getElementById("learn-link");
+			var about = document.getElementById("about-link");
+			var privacy = document.getElementById("privacy-link");
+			learn.textContent = "Tutoriels"; learn.href = "../fr/tutoriels/";
+			about.textContent = "À propos"; about.href = "../fr/a-propos/";
+			privacy.textContent = "Confidentialité"; privacy.href = "../fr/confidentialite/";
+		}());
+	</script>
+	<script type="module" src="background-remover-v13.js?build=13"></script>
+</body>
+</html>
